@@ -130,13 +130,32 @@ A list of parameters and their basic description is as follows:
 
 ## Visualization
 The `.arff` files generated can be analysed in several data analysis tool, such as WEKA.  
-I've added some `MatLab` modules that can be used to read and plot `.arff` files (binary-classification, 2D or 3D problems) and analyse the data typology of the minority class (*safe*, *border*, *rare*, *and* outlier examples).
+I've added some `MatLab` modules that can be used to read the `.arff` files, plot the data, and analyse the data typology of the minority class (*safe*, *border*, *rare*, and *outlier* examples).
 
+In the current version, it is assumed that class `1` corresponds to the minority class, whereas `2` corresponds to the majority. Only binary-classification is considered and data typology is only analysed for the minority class. Therefore, it is assumed that the class attribute created by the data generator respects one of the following formats:
+
+```
+@attribute CLASS {MIN,MAJ}
+@attribute D {1,2}
+@attribute LABEL {1-SAFE,1-BORDER,1-RARE,1-OUTLIER,1-DEFAULT,2}
+@attribute LABEL {MIN-SAFE,MIN-BORDER,MIN-RARE,MIN-OUTLIER,MIN-DEFAULT,MAJ}
+```
+If the data is two- or three-dimensional, the data is plotted in 2D/3D. If the number of attributes/features is higher than 3, then Principal Component Analysis (PCA) is performed, and data is plotted in 2D. If `savePlot` is activated, the code will store a `.png` of the respective datastet.
+
+```matlab
+clear all, clc
+addpath('arff-to-mat');
+addpath('datasets');
+
+savePlot = 0 % do not save plot
+% savePlot = 1 % save plot
+
+plotDataTypes('paw3-2d.arff', savePlot);
+
+```
+Below are some visualizations of datasets created using the data generator. Configuration files are available at `experiments/config-files` and corresponding datasets are in `visualization/datasets`.
 
 ![Visualization Examples](visualization.png)
-
-
-
 
 ## Additional Information
 Additional information regarding the data generation (design and implementation details, main packages and classes, scheme of generator operations) is based on [RAPORT-RB-16-14](https://github.com/miriamspsantos/datagenerator/blob/documentation/docs/raport-rb-16-14.pdf), and translated to [REPORT-RB-16-14-EN](https://github.com/miriamspsantos/datagenerator/blob/documentation/docs/REPORT-RB-16-14-EN.pdf). A list of parameters, their description, possible values, requirements, and example of use is also provided, for ease of use ([Generator-Parameters.xls]()).
