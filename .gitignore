@@ -4,4 +4,4 @@
 /dist/
 /.gradle/
 /.idea/
-*.arff
+*.DS_Store
